@@ -1,4 +1,5 @@
 $(function () {
+  console.log("connected");
   var currentBoard = window.location.pathname.slice(3, -1);
   var url = "/api/threads/" + currentBoard;
   $("#boardTitle").text("Welcome to " + window.location.pathname);

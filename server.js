@@ -12,7 +12,13 @@ const runner = require("./test-runner");
 const app = express();
 app.use(
   helmet({
-    dnsPrefetchControl: false,
+    frameguard: {
+      action: "sameorigin",
+    },
+    // referrerPolicy makes sure when going to another site they can't track you. We set to same-origin so we can look at referrer site if the domain/origin is the same
+    referrerPolicy: {
+      policy: "same-origin",
+    },
     contentSecurityPolicy: {
       directives: {
         scriptSrc: ["'self'", "https://code.jquery.com/"],
