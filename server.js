@@ -35,6 +35,7 @@ app.use(cors({ origin: "*" })); //For FCC testing purposes only
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Changed this to show on view board page
 //Sample front-end
 app.route("/b/:board/").get(function (req, res) {
   res.sendFile(process.cwd() + "/views/board.html");

@@ -1,6 +1,12 @@
 $(function () {
-  console.log("connected");
-  var currentBoard = window.location.pathname.slice(3, -1);
+  var currentBoard = window.location.pathname.slice(3);
+  // Need this so currentBoard works with a / after it as well.
+  if (currentBoard.charAt(currentBoard.length - 1) === "/") {
+    currentBoard = currentBoard.substring(0, currentBoard.length - 1);
+  }
+  // Need to add this to be able to add new thread to a specific board
+  $("#board1").val(currentBoard);
+
   var url = "/api/threads/" + currentBoard;
   $("#boardTitle").text("Welcome to " + window.location.pathname);
   $.ajax({
@@ -20,7 +26,7 @@ $(function () {
           '<p class="id">id: ' + ele._id + " (" + ele.created_on + ")</p>"
         );
         thread.push(
-          '<form id="reportThread"><input type="hidden" name="report_id" value="' +
+          '<form id="reportThread"><input type="hidden" name="thread_id" value="' +
             ele._id +
             '"><input type="submit" value="Report"></form>'
         );
@@ -80,7 +86,7 @@ $(function () {
           '<textarea rows="5" cols="80" type="text" placeholder="Quick reply..." name="text" required=""></textarea><br>'
         );
         thread.push(
-          '<input type="text" placeholder="password to delete" name="delete_password" required=""><input style="margin-left: 5px" type="submit" value="Submit">'
+          '<input type="text" placeholder="password to delete" name="delete_password" required=""><input type="submit" value="Submit">'
         );
         thread.push("</form></div></div></div>");
         boardThreads.push(thread.join(""));
