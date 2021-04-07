@@ -58,8 +58,8 @@ module.exports = function (app) {
           return res.redirect(
             "/b/" +
               savedThread.board +
-              "/" +
-              savedThread._id /* NEED THIS PART FOR FUNCTIONAL TESTS TO SET THREAD ID EASILY */
+              "/" /* +
+              savedThread._id  // NEED THIS PART FOR FUNCTIONAL TESTS TO SET THREAD ID EASILY */
           );
         }
       });

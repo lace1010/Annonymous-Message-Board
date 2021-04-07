@@ -4,11 +4,13 @@ $(function () {
   if (currentBoard.charAt(currentBoard.length - 1) === "/") {
     currentBoard = currentBoard.substring(0, currentBoard.length - 1);
   }
+
+  let boardVal = currentBoard.replace(/%20/g, " ");
   // Need to add this to be able to add new thread to a specific board
-  $("#board1").val(currentBoard);
+  $("#board1").val(boardVal);
 
   var url = "/api/threads/" + currentBoard;
-  $("#boardTitle").text("Welcome to " + window.location.pathname);
+  $("#boardTitle").text("Welcome to thread " + boardVal);
   $.ajax({
     type: "GET",
     url: url,
