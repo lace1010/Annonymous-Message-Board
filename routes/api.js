@@ -59,7 +59,7 @@ module.exports = function (app) {
             "/b/" +
               savedThread.board +
               "/" +
-              savedThread._id /* Need this part for functional tests */
+              savedThread._id /* NEED THIS PART FOR FUNCTIONAL TESTS TO SET THREAD ID EASILY */
           );
         }
       });
@@ -89,6 +89,7 @@ module.exports = function (app) {
           }
         });
     })
+
     .delete((req, res) => {
       Thread.findOneAndDelete(
         {
@@ -98,12 +99,12 @@ module.exports = function (app) {
         (error, successful) => {
           if (error) return res.json("incorrect password");
           else if (!error && !successful) return res.json("incorrect password");
-          else if (!error && successful) return res.json("succes");
+          else if (!error && successful) return res.json("success");
         }
       );
     })
+
     .put((req, res) => {
-      console.log(req.body, "<= req.body");
       let id = req.body.thread_id;
       let update = { reported: true };
       let options = { new: true };
@@ -134,7 +135,12 @@ module.exports = function (app) {
         (error, updatedThread) => {
           if (!error && updatedThread) {
             return res.redirect(
-              "/b/" + updatedThread.board + "/" + updatedThread._id
+              "/b/" +
+                updatedThread.board +
+                "/" +
+                updatedThread._id +
+                "?new_reply_id=" + // Added this unnecessary query to the end so we can use reply id in functional tests
+                newReply.id
             );
           }
         }
@@ -155,9 +161,9 @@ module.exports = function (app) {
         }
       });
     })
+
     .delete((req, res) => {
       let correctReplyId = false; // use this variable to call on save if changed to true
-      console.log(req.body, "<= req.body");
       // find a way to search through each replies (maybe findOneAndDelete inside a findOne)
       Thread.findById(req.body.thread_id, (error, threadToUpdate) => {
         if (error) return res.json("incorrect thread id");
@@ -184,6 +190,7 @@ module.exports = function (app) {
         }
       });
     })
+
     .put((req, res) => {
       let correctReplyId = false;
       Thread.findById(req.body.thread_id, (error, threadToUpdateReply) => {
