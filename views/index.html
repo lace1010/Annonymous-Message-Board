@@ -12,11 +12,12 @@
   <body>
     <header>
       <h1>
-        ISQA_3 - Anon Message Board
+        Anonymous Message Board
       </h1>
+      <a href= "/b/General/">Go to General</a>
     </header>
-    <div id='testui' style='margin-left: 5%'>
-      <h2 style="text-align: left">API Tests:</h2>
+    <div id='testui'>
+      <h2>API Tests:</h2>
         <h4>New thread (POST /api/threads/:board)</h4>
         <form action="/api/threads/test" method="post" id="newThread">
           <input type='text' placeholder='board' id='board1' name='board' required=''><br>
@@ -68,8 +69,9 @@
           <input type="submit" value="Submit">
         </form>        
     </div>
-    <a href="https://www.espn.com.sg">espn</a>
-    <hr style='margin: 50px; margin-top: 200px'>
+    <footer>
+      Designed and Coded by: <a id="footerLink" href="https://www.linkedin.com/in/hunter-lacefield-871995115/">Hunter Lacefield</a>
+    </footer>
     <!-- Your web-app is https, so your scripts need to be too -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"
             integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="

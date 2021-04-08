@@ -1,5 +1,7 @@
 "use strict";
 const mongoose = require("mongoose");
+// Use shortid as it looks cleaner with just a 9 character code
+const shortid = require("shortid");
 
 module.exports = function (app) {
   let uri = process.env.ANONYMOUS_MESSAGE_BOARD_MONGO_URI;
@@ -18,6 +20,7 @@ module.exports = function (app) {
   // });
 
   const replySchema = new Schema({
+    _id: { type: String, default: shortid.generate },
     text: { type: String, required: true },
     delete_password: { type: String, required: true },
     created_on: { type: Date, default: new Date() },
@@ -26,6 +29,7 @@ module.exports = function (app) {
   const Reply = mongoose.model("Reply", replySchema);
 
   const threadSchema = new Schema({
+    _id: { type: String, default: shortid.generate },
     board: { type: String, required: true }, // Name of board that goes in URL
     text: { type: String, required: true }, // Text that is basically title of the thread
     delete_password: { type: String, required: true },
@@ -42,6 +46,7 @@ module.exports = function (app) {
     .route("/api/threads/:board/")
     .post((req, res) => {
       let thread = new Thread({
+        _id: shortid.generate(),
         board: req.body.board,
         text: req.body.text,
         delete_password: req.body.delete_password,
@@ -118,6 +123,7 @@ module.exports = function (app) {
     .route("/api/replies/:board")
     .post((req, res) => {
       let newReply = new Reply({
+        _id: shortid.generate(),
         text: req.body.text,
         delete_password: req.body.delete_password,
         created_on: new Date(),

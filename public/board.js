@@ -10,7 +10,7 @@ $(function () {
   $("#board1").val(boardVal);
 
   var url = "/api/threads/" + currentBoard;
-  $("#boardTitle").text("Welcome to thread " + boardVal);
+  $("#boardTitle").text("Welcome to " + boardVal);
   $.ajax({
     type: "GET",
     url: url,
@@ -21,58 +21,72 @@ $(function () {
       // THIS IS NOT WHAT IT WOULD LOOK LIKE TO GO LIVE
       //
       data.forEach(function (ele) {
+        // To display normal date we must create a new date form here for toDateString() to work in each thread.
+        let created_on = new Date(ele.created_on);
+
         console.log(ele); //can I use typeScript please?!
         var thread = ['<div class="thread">'];
-        thread.push('<div class="main">');
+        thread.push('<div class="main"><div class="mainBesidesText">');
         thread.push(
-          '<p class="id">id: ' + ele._id + " (" + ele.created_on + ")</p>"
+          '<p class="id">id: ' +
+            ele._id +
+            "<span class='date'>Date: " +
+            created_on.toDateString() +
+            "</span></p>"
+        );
+
+        thread.push(
+          '<div id="deleteAndReportContainer"><form id="deleteThread"><input type="hidden" value="' +
+            ele._id +
+            '" name="thread_id" required=""><input class="threadInput" type="text" placeholder="password" name="delete_password" required=""><input id="deleteThreadButton" class="threadInputButtons" type="submit" value="Delete"></form>'
         );
         thread.push(
           '<form id="reportThread"><input type="hidden" name="thread_id" value="' +
             ele._id +
-            '"><input type="submit" value="Report"></form>'
+            '"><input class="threadInputButtons" type="submit" value="Report"></form></div></div>'
         );
-        thread.push(
-          '<form id="deleteThread"><input type="hidden" value="' +
-            ele._id +
-            '" name="thread_id" required=""><input type="text" placeholder="password" name="delete_password" required=""><input type="submit" value="Delete"></form>'
-        );
-        thread.push("<h3>" + ele.text + "</h3>");
+        thread.push("<h3 class='threadText'>" + ele.text + "</h3>");
         thread.push('</div><div class="replies">');
         var hiddenCount = ele.replycount - 3;
         if (hiddenCount < 1) {
           hiddenCount = 0;
         }
         thread.push(
-          "<h5>" +
+          "<h5 class='replyCountMessage'>" +
             ele.replycount +
             " replies total (" +
             hiddenCount +
-            ' hidden)- <a href="' +
+            ' hidden)- <a id="replyLink" href="' +
             window.location.pathname +
             ele._id +
             '">See the full thread here</a>.</h5>'
         );
         ele.replies.forEach(function (rep) {
+          let replyCreatedOn = new Date(rep.created_on);
           thread.push('<div class="reply">');
           thread.push(
-            '<p class="id">id: ' + rep._id + " (" + rep.created_on + ")</p>"
+            '<div class="replyInfoAndForms"><p class="id">id: ' +
+              rep._id +
+              "<span class='replyDate'>Date: " +
+              replyCreatedOn.toDateString() +
+              "</span></p>"
+          );
+
+          thread.push(
+            '<div class="replyFormContainer"><form id="deleteReply"><input type="hidden" value="' +
+              ele._id +
+              '" name="thread_id" required=""><input type="hidden" value="' +
+              rep._id +
+              '" name="reply_id" required=""><input class="replyInput" type="text" placeholder="password" name="delete_password" required=""><input id="deleteReplyButtons" class="replyInputButtons" type="submit" value="Delete"></form>'
           );
           thread.push(
             '<form id="reportReply"><input type="hidden" name="thread_id" value="' +
               ele._id +
               '"><input type="hidden" name="reply_id" value="' +
               rep._id +
-              '"><input type="submit" value="Report"></form>'
+              '"><input class="replyInputButtons" type="submit" value="Report"></form></div></div>'
           );
-          thread.push(
-            '<form id="deleteReply"><input type="hidden" value="' +
-              ele._id +
-              '" name="thread_id" required=""><input type="hidden" value="' +
-              rep._id +
-              '" name="reply_id" required=""><input type="text" placeholder="password" name="delete_password" required=""><input type="submit" value="Delete"></form>'
-          );
-          thread.push("<p>" + rep.text + "</p>");
+          thread.push("<p class='replyText'>" + rep.text + "</p>");
           thread.push("</div>");
         });
         thread.push('<div class="newReply">');
@@ -85,10 +99,10 @@ $(function () {
           '<input type="hidden" name="thread_id" value="' + ele._id + '">'
         );
         thread.push(
-          '<textarea rows="5" cols="80" type="text" placeholder="Quick reply..." name="text" required=""></textarea><br>'
+          '<textarea class="replyTextarea" type="text" placeholder="Quick reply..." name="text" required=""></textarea><br>'
         );
         thread.push(
-          '<input type="text" placeholder="password to delete" name="delete_password" required=""><input type="submit" value="Submit">'
+          '<input type="text" placeholder="password to delete" name="delete_password" required=""><input class="quickReplyButton" type="submit" value="Submit">'
         );
         thread.push("</form></div></div></div>");
         boardThreads.push(thread.join(""));

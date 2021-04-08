@@ -15,18 +15,19 @@
     </header>
     
     <div id='submitNewThread'>
-      <h3>Submit a new thread:</h3>
+      <h3 id="submitNewThreadHeader">Submit a new thread:</h3>
       <form id="newThread" method="post" action="/api/threads/">
         <input type='hidden' placeholder='board' id='board1' name='board'><br>
-        <textarea rows="8" cols="120" type='text' placeholder='Thread text...' name='text' required=''></textarea><br>
-        <input type='text' placeholder='password to delete' name='delete_password' required=''><br>
-        <input type="submit" value="Submit">
+        <textarea id ="submitNewTextarea" type='text' placeholder='Thread text...' name='text' required=''></textarea><br>
+        <input id="submitNewThreadPassword" type='text' placeholder='password to delete' name='delete_password' required=''>
+        <input id="submitNewThreadButton" type="submit" value="Submit">
       </form>
     </div>
     
     <div id='boardDisplay'></div>
-    
-    <hr style='margin: 50px; margin-top: 200px'>
+    <footer>
+      Designed and Coded by: <a id="footerLink" href="https://www.linkedin.com/in/hunter-lacefield-871995115/">Hunter Lacefield</a>
+    </footer>
     
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"
             integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
