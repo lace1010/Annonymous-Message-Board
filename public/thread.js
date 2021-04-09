@@ -41,7 +41,7 @@ $(function () {
           ele._id +
           '"><input class="threadInputButtons" type="submit" value="Report"></form></div></div>'
       );
-      thread.push("<h3>" + ele.text + "</h3>");
+      thread.push("<h3 class='threadText'>" + ele.text + "</h3>");
       thread.push('</div><div class="replies">');
       ele.replies.forEach(function (rep) {
         let replyCreatedOn = new Date(rep.created_on);
