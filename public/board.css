@@ -285,7 +285,8 @@ textarea {
 
 footer {
   color: var(--main-dark);
-  margin: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
 #footerLink {

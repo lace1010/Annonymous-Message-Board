@@ -147,6 +147,7 @@ $(function () {
       data: $(this).serialize(),
       success: function (data) {
         alert(data);
+        window.location.reload();
       },
     });
     e.preventDefault();
@@ -159,6 +160,7 @@ $(function () {
       data: $(this).serialize(),
       success: function (data) {
         alert(data);
+        window.location.reload();
       },
     });
     e.preventDefault();
