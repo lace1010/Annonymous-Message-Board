@@ -67,7 +67,7 @@ $(function () {
           thread.push(
             '<div class="replyInfoAndForms"><p class="id">id: ' +
               rep._id +
-              "<span class='replyDate'>Date: " +
+              "<span class='date'>Date: " +
               replyCreatedOn.toDateString() +
               "</span></p>"
           );
